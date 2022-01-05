@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 // connecting to db
-mongoose.connect("mongodb://localhost:27017/Details");
+mongoose.connect("mongodb://127.0.0.1:27017/Details");
 
 // schema of object(document) sent to database
 const detailSchema = mongoose.Schema({
@@ -25,17 +25,12 @@ const Detail = mongoose.model("Detail",detailSchema);
 
 // POST req at home route(end-point)
 app.post("/",(req,res)=>{
-    // console.log(req);
-    console.log(req.body.fullName);
-    console.log(req.body.email);
-    console.log(req.body.contactNumber);
-    console.log(req.body.message);
     const data = new Detail({
         name: req.body.fullName,
         email: req.body.email,
         contactNumber: req.body.contactNumber,
         message: req.body.message
-    }).save().then((err)=>{
+    }).save((err)=>{
         if(!err) res.send("Data Submitted Succesfully");
         else res.send(err);
     })
